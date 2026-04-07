@@ -15,7 +15,7 @@ A [Raycast](https://raycast.com) extension for logging work checkpoints througho
          │ reads
          ▼
 ┌─────────────────────┐
-│   MCP Server        │  ← work-checkpoints-mcp
+│   MCP Server        │  ← timesheet-data-mcp
 │   (Claude Desktop)  │
 └────────┬────────────┘
          │ exposes tools to
@@ -23,7 +23,7 @@ A [Raycast](https://raycast.com) extension for logging work checkpoints througho
    Claude Desktop       ← generates timesheet from checkpoints
 ```
 
-The extension writes to a local JSON file. The [MCP server](https://github.com/rodrigo-arias/work-checkpoints-mcp) exposes that data to Claude Desktop via the Model Context Protocol, where Claude can query checkpoints and produce structured time reports.
+The extension writes to a local JSON file. The [MCP server](https://github.com/rodrigo-arias/timesheet-data-mcp) exposes that data to Claude Desktop via the Model Context Protocol, where Claude can query checkpoints and produce structured time reports.
 
 ## Features
 
@@ -64,4 +64,4 @@ The JSON file path is available via the `Copy JSON File Path` action in the List
 
 ## Related
 
-- [work-checkpoints-mcp](https://github.com/rodrigo-arias/work-checkpoints-mcp) — MCP server that exposes checkpoints to Claude Desktop
+- [timesheet-data-mcp](https://github.com/rodrigo-arias/timesheet-data-mcp) — MCP server that exposes checkpoints to Claude Desktop
