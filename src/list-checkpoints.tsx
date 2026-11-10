@@ -6,6 +6,7 @@ import {
   deleteCheckpoint,
   clearTodayCheckpoints,
   getJsonFilePath,
+  localDateString,
 } from "./utils/storage";
 import { CheckpointForm } from "./components/CheckpointForm";
 import { showFailureToast } from "@raycast/utils";
@@ -21,10 +22,10 @@ function formatTime(isoString: string): string {
 function formatDayLabel(dateStr: string): string {
   const date = new Date(dateStr + "T12:00:00");
   const today = new Date();
-  const todayStr = today.toISOString().split("T")[0];
+  const todayStr = localDateString(today);
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
-  const yesterdayStr = yesterday.toISOString().split("T")[0];
+  const yesterdayStr = localDateString(yesterday);
 
   if (dateStr === todayStr) return "Today";
   if (dateStr === yesterdayStr) return "Yesterday";

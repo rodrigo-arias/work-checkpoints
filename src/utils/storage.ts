@@ -1,14 +1,15 @@
-import { LocalStorage, environment } from "@raycast/api";
+import { LocalStorage } from "@raycast/api";
 import crypto from "crypto";
 import fs from "fs";
+import os from "os";
 import path from "path";
 import { Checkpoint } from "../types";
 
 const CHECKPOINTS_KEY = "checkpoints";
 
 // JSON file path where Claude Desktop can read the checkpoints
-// Stored in the extension's support directory
-const JSON_FILE_DIR = path.join(environment.supportPath);
+// Not the Raycast support path: that moves when Raycast reorganizes its storage
+const JSON_FILE_DIR = path.join(os.homedir(), "Library", "Application Support", "timesheet-assistant");
 const JSON_FILE_PATH = path.join(JSON_FILE_DIR, "checkpoints.json");
 
 function ensureDir() {
@@ -27,8 +28,13 @@ export function getJsonFilePath(): string {
   return JSON_FILE_PATH;
 }
 
+// Local calendar date — not toISOString(), which rolls over at 21:00 in Argentina
+export function localDateString(d: Date = new Date()): string {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
 function todayDate(): string {
-  return new Date().toISOString().split("T")[0];
+  return localDateString();
 }
 
 export async function getCheckpoints(): Promise<Checkpoint[]> {
@@ -59,7 +65,7 @@ export async function getCurrentWeekCheckpoints(): Promise<Checkpoint[]> {
   const monday = new Date(now);
   monday.setDate(now.getDate() - ((day + 6) % 7));
   monday.setHours(0, 0, 0, 0);
-  const mondayStr = monday.toISOString().split("T")[0];
+  const mondayStr = localDateString(monday);
   return all.filter((c) => c.date >= mondayStr);
 }
 
